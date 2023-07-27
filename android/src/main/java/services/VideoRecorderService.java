@@ -48,8 +48,7 @@ public class VideoRecorderService extends Service {
 
     // Handles the camera events
     private CameraDevice mCameraDevice;
-    private final CameraDevice.StateCallback mCameraDeviceStateCallback
-            = new CameraDevice.StateCallback() {
+    private final CameraDevice.StateCallback mCameraDeviceStateCallback = new CameraDevice.StateCallback() {
         @Override
         public void onOpened(@NonNull CameraDevice camera) {
             mCameraDevice = camera;
@@ -125,10 +124,8 @@ public class VideoRecorderService extends Service {
         NotificationChannel notificationChannel = new NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
                 "RecordingServiceNotification",
-                NotificationManager.IMPORTANCE_LOW
-        );
-        Notification notification
-                = new Notification.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
+                NotificationManager.IMPORTANCE_LOW);
+        Notification notification = new Notification.Builder(getApplicationContext(), NOTIFICATION_CHANNEL_ID)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
                 .setSmallIcon(android.R.drawable.presence_video_online)
@@ -148,6 +145,7 @@ public class VideoRecorderService extends Service {
     }
 
     public void startVideoRecording() {
+        System.out.println("Service Start recording dipanggil");
         isRecording = true;
         Log.i(TAG, "Recorder initializing");
         Intent broadcastIntent = new Intent();
@@ -162,7 +160,16 @@ public class VideoRecorderService extends Service {
 
     public String stopVideoRecording() {
         mMediaRecorder.stop();
+        // try {
+        // System.out.println("Service Stop recording dipanggil");
+
+        // } catch (RuntimeException stopException) {
+        // // handle cleanup here
+        // System.out.println("Service Stop recording dipanggil");
+
+        // }
         mMediaRecorder.reset();
+        mMediaRecorder.release();
         mMediaRecorder = null;
         closeCamera();
         isRecording = false;
@@ -195,10 +202,11 @@ public class VideoRecorderService extends Service {
             lensFacing = CameraCharacteristics.LENS_FACING_BACK;
         }
         try {
-            for (String cameraId: cameraManager.getCameraIdList()) {
+            for (String cameraId : cameraManager.getCameraIdList()) {
                 CameraCharacteristics cameraCharacteristics = cameraManager.getCameraCharacteristics(cameraId);
                 if (cameraCharacteristics.get(CameraCharacteristics.LENS_FACING) == lensFacing) {
-                    StreamConfigurationMap map = cameraCharacteristics.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+                    StreamConfigurationMap map = cameraCharacteristics
+                            .get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
                     int deviceOrientation = mWindowManager.getDefaultDisplay().getRotation();
                     mTotalRotation = sensorToDeviceRotation(cameraCharacteristics, deviceOrientation);
                     mVideoSize = chooseOptimalSize(map.getOutputSizes(MediaRecorder.class));
@@ -221,8 +229,7 @@ public class VideoRecorderService extends Service {
             Toast.makeText(
                     getApplicationContext(),
                     "Connection to camera failed. Make sure you have granted camera permissions to the app or the camera is not in use.",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    Toast.LENGTH_SHORT).show();
             destroyServiceOnException();
         }
     }
@@ -243,8 +250,7 @@ public class VideoRecorderService extends Service {
                                 cameraCaptureSession.setRepeatingRequest(
                                         mCaptureRequestBuilder.build(),
                                         null,
-                                        null
-                                );
+                                        null);
                             } catch (CameraAccessException e) {
                                 e.printStackTrace();
                             }
@@ -255,12 +261,10 @@ public class VideoRecorderService extends Service {
                             Toast.makeText(
                                     getApplicationContext(),
                                     "Failed to create capture session",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     },
-                    null
-            );
+                    null);
         } catch (IOException | CameraAccessException e) {
             e.printStackTrace();
         }
@@ -289,19 +293,6 @@ public class VideoRecorderService extends Service {
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }
-    // private void setupMediaRecorder() throws IOException {
-    //     mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
-    //     mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-    //     mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-    //     mMediaRecorder.setOutputFile(mVideoFileName);
-    //     mMediaRecorder.setVideoEncodingBitRate(10000000);
-    //     mMediaRecorder.setVideoFrameRate(30);
-    //     mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
-    //     mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-    //     mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-    //     mMediaRecorder.setOrientationHint(mTotalRotation);
-    //     mMediaRecorder.prepare();
-    // }
 
     private void createVideoFolder() {
         File videoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
@@ -312,8 +303,7 @@ public class VideoRecorderService extends Service {
                 Toast.makeText(
                         getApplicationContext(),
                         "Failed to create target folder. Make sure you have granted file permissions and try again.",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        Toast.LENGTH_SHORT).show();
             } else {
                 Log.i(TAG, "Target folder created successfully at " + mVideoFolder.getAbsolutePath());
             }
@@ -334,8 +324,7 @@ public class VideoRecorderService extends Service {
             Toast.makeText(
                     getApplicationContext(),
                     "Failed to create target file. Make sure you have granted file permissions and try again.",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    Toast.LENGTH_SHORT).show();
             destroyServiceOnException();
         }
     }
@@ -348,7 +337,7 @@ public class VideoRecorderService extends Service {
 
     private static Size chooseOptimalSize(Size[] choices) {
         List<Size> sizes = new ArrayList<>();
-        for (Size option: choices) {
+        for (Size option : choices) {
             if (option.getHeight() == option.getWidth() * 1080 / 1920
                     && option.getWidth() >= 1920
                     && option.getHeight() >= 1080) {

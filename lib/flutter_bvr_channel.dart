@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-
 import 'flutter_bvr_platform_interface.dart';
 
 /// An implementation of [FlutterBackgroundVideoRecorderPlatform] that uses method channels.
@@ -12,6 +11,10 @@ class FlutterBVRChannel extends FlutterBackgroundVideoRecorderPlatform {
   static const EventChannel _eventChannel =
       EventChannel('flutter_background_video_recorder_event');
 
+  /// The event channel used to interact with the native platform.
+  static const EventChannel _eventChannelVideo =
+      EventChannel('flutter_background_video_state');
+
   /// Method used to get the most recent status of the video recorder
   @override
   Future<int> getRecordingStatus() async {
@@ -22,14 +25,25 @@ class FlutterBVRChannel extends FlutterBackgroundVideoRecorderPlatform {
   /// native platform to event channel
   @override
   Stream<int> get recorderState {
-    return _eventChannel.receiveBroadcastStream().map((value) => value as int);
+    return _eventChannel.receiveBroadcastStream().map((value) {
+      return value as int;
+    });
+  }
+
+  /// Stream that transmits the current status of video recorder from
+  /// native platform to event channel
+  @override
+  Stream<String> get videoState {
+    return _eventChannelVideo.receiveBroadcastStream().map((value) {
+      return value as String;
+    });
   }
 
   /// Method to start recording video
   @override
   Future<bool?> startVideoRecording(
       {required String folderName,
-      required CameraFacing cameraFacing,
+      required String cameraFacing,
       required String notificationTitle,
       required String notificationText,
       required bool showToast}) async {
@@ -37,9 +51,7 @@ class FlutterBVRChannel extends FlutterBackgroundVideoRecorderPlatform {
       "startVideoRecording",
       {
         "videoFolderName": folderName,
-        "cameraFacing": cameraFacing == CameraFacing.frontCamera
-            ? "Front Camera"
-            : "Rear Camera",
+        "cameraFacing": cameraFacing,
         "notificationTitle": notificationTitle,
         "notificationText": notificationText,
         "showToast": showToast ? 'true' : 'false'

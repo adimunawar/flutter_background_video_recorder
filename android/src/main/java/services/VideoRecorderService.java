@@ -246,7 +246,8 @@ public class VideoRecorderService extends Service {
                     new CameraCaptureSession.StateCallback() {
                         @Override
                         public void onConfigured(@NonNull CameraCaptureSession cameraCaptureSession) {
-                            try {
+
+                            try {                            
                                 cameraCaptureSession.setRepeatingRequest(
                                         mCaptureRequestBuilder.build(),
                                         null,

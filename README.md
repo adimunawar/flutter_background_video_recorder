@@ -13,10 +13,6 @@ This simple plugin allows you to record videos in your Android app while the app
 * Recording continues even with the screen off or locked
 * Works with front as well as rear camera
 
-## Future additions
-* Audio only recorder
-* Camera preview when app is in the foreground
-* Flashlight
 
 ## About iOS version
 This plugin is not available for iOS platform. If someone manages to make it work with iOS, they can contribute to this package.

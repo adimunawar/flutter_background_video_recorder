@@ -42,7 +42,6 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
   private static final String TAG = "LightBackgroundVideoRecorder/Plugin";
   private static final int REQUEST_CAMERA_AUDIO_PERMISSION_RESULT = 4415;
   private static final int REQUEST_WRITE_PERMISSION_RESULT = 4416;
-
   public static final String RECORDING_RECEIVER = "RECORDING_RECEIVER";
   private static final int STATUS_RECORDING = 1;
   private static final int STATUS_STOPPED = 2;
@@ -56,6 +55,10 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
   private MethodChannel channel;
   private EventChannel eventChannel;
   private EventChannel.EventSink mEventSink;
+  //ini testing ngembaliin string path video
+  private EventChannel eventChannelString;
+  private EventChannel.EventSink mEventStringSink;
+  //
   private VideoRecorderService mVideoRecordingService;
 
   private Context mContext;
@@ -102,6 +105,9 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
 
     eventChannel = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_background_video_recorder_event");
     eventChannel.setStreamHandler(this);
+    //ngembaliin data
+    eventChannelString = new EventChannel(flutterPluginBinding.getBinaryMessenger(), "flutter_background_video_state");
+    eventChannelString.setStreamHandler(this);
 
     IntentFilter filter = new IntentFilter(RECORDING_RECEIVER);
     filter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -172,6 +178,7 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
     Log.i(TAG, "Plugin detached from engine");
     channel.setMethodCallHandler(null);
     eventChannel.setStreamHandler(null);
+    eventChannelString.setStreamHandler(null);
     mContext.unregisterReceiver(this);
   }
 
@@ -310,11 +317,13 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
   @Override
   public void onListen(Object arguments, EventChannel.EventSink events) {
     mEventSink = events;
+    mEventStringSink = events;
   }
 
   @Override
   public void onCancel(Object arguments) {
     mEventSink = null;
+    mEventStringSink =null;
   }
 
   @Override
@@ -333,6 +342,7 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
       case "STOPPED":
         mRecordingStatus = STATUS_STOPPED;
         mEventSink.success(STATUS_STOPPED);
+        // mEventStringSink.success("testing");
         break;
       case "INITIALIZING":
         mRecordingStatus = STATUS_INITIALIZING;

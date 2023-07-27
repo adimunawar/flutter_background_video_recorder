@@ -51,11 +51,15 @@ abstract class FlutterBackgroundVideoRecorderPlatform
     throw UnimplementedError('recorderState has not been implemented.');
   }
 
+  Stream<String> get videoState {
+    throw UnimplementedError('videoState has not been implemented.');
+  }
+
   /// Starts service and records video
   /// Must pass folder name, camera facing direction, notification title and notification text
   Future<bool?> startVideoRecording(
       {required String folderName,
-      required CameraFacing cameraFacing,
+      required String cameraFacing,
       required String notificationTitle,
       required String notificationText,
       required bool showToast}) {

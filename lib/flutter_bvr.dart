@@ -4,7 +4,7 @@ class FlutterBackgroundVideoRecorder {
   // Start recording service and record video
   Future<bool?> startVideoRecording(
       {required String folderName,
-      required CameraFacing cameraFacing,
+      required String cameraFacing,
       required String notificationTitle,
       required String notificationText,
       bool showToast = false}) {
@@ -29,6 +29,10 @@ class FlutterBackgroundVideoRecorder {
   ///    - 4: An exception has occurred in the recording service
   Stream<int> get recorderState {
     return FlutterBackgroundVideoRecorderPlatform.instance.recorderState;
+  }
+
+  Stream<String> get videoPath {
+    return FlutterBackgroundVideoRecorderPlatform.instance.videoState;
   }
 
   // Get current state of video recorder

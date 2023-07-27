@@ -276,16 +276,32 @@ public class VideoRecorderService extends Service {
     private void setupMediaRecorder() throws IOException {
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.WEBM);
+        // mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(10000000);
         mMediaRecorder.setVideoFrameRate(30);
-        mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
-        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+        mMediaRecorder.setVideoSize(1280, 720);
+        // mMediaRecorder.setVideoSize(mVideoSize.getWi),dth( mVideoSize.getHeight());
+        mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.VP8);
+        // mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }
+    // private void setupMediaRecorder() throws IOException {
+    //     mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+    //     mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+    //     mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+    //     mMediaRecorder.setOutputFile(mVideoFileName);
+    //     mMediaRecorder.setVideoEncodingBitRate(10000000);
+    //     mMediaRecorder.setVideoFrameRate(30);
+    //     mMediaRecorder.setVideoSize(mVideoSize.getWidth(), mVideoSize.getHeight());
+    //     mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+    //     mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+    //     mMediaRecorder.setOrientationHint(mTotalRotation);
+    //     mMediaRecorder.prepare();
+    // }
 
     private void createVideoFolder() {
         File videoFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);

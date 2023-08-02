@@ -286,8 +286,9 @@ public class VideoRecorderService extends Service {
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(10000000);
         mMediaRecorder.setVideoFrameRate(30);
-        mMediaRecorder.setVideoSize(1280, 720);
-        // mMediaRecorder.setVideoSize(mVideoSize.getWi),dth( mVideoSize.getHeight());
+        mMediaRecorder.setVideoSize(640, 480);
+        // mMediaRecorder.setVideoSize(1280, 720);
+        // mMediaRecorder.setVideoSize(mVideoSize.getWidth()),( mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.VP8);
         // mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);

@@ -281,16 +281,14 @@ public class VideoRecorderService extends Service {
     private void setupMediaRecorder() throws IOException {
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-//        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.WEBM);
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoSize(640, 480);
         mMediaRecorder.setVideoFrameRate(16); //might be auto-determined due to lighting
         mMediaRecorder.setVideoEncodingBitRate(3000000);
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);// MPEG_4_SP
 //        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-//        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         mMediaRecorder.setOrientationHint(mTotalRotation);
         mMediaRecorder.prepare();
     }

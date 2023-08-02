@@ -44,6 +44,7 @@ public class FlutterBackgroundVideoRecorderPlugin extends BroadcastReceiver impl
   private static final int REQUEST_WRITE_PERMISSION_RESULT = 4416;
   public static final String RECORDING_RECEIVER = "RECORDING_RECEIVER";
   private static final int STATUS_RECORDING = 1;
+
   private static final int STATUS_STOPPED = 2;
   private static final int STATUS_INITIALIZING = 3;
   private static final int STATUS_EXCEPTION = -1;

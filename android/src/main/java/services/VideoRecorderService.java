@@ -283,7 +283,7 @@ public class VideoRecorderService extends Service {
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 //        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.WEBM);
 //        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         mMediaRecorder.setOutputFile(mVideoFileName);
         mMediaRecorder.setVideoEncodingBitRate(10000000);
         mMediaRecorder.setVideoFrameRate(30);

@@ -288,7 +288,7 @@ public class VideoRecorderService extends Service {
         mMediaRecorder.setVideoFrameRate(30);
         //mMediaRecorder.setVideoSize(640, 480);
         // mMediaRecorder.setVideoSize(1280, 720);
-        mMediaRecorder.setVideoSize(mVideoSize.getWidth()),( mVideoSize.getHeight());
+        mMediaRecorder.setVideoSize(mVideoSize.getWidth(),mVideoSize.getHeight());
         mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.VP8);
         // mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
         mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
